@@ -9,11 +9,11 @@ namespace CatalinaNetworks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UsersDbContext _context;
 
-        public UserController(UsersDbContext context)
+        public UsersController(UsersDbContext context)
         {
             _context = context;
         }
