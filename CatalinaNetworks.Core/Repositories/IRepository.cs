@@ -2,7 +2,7 @@
 {
     public interface IRepository<T> : IDisposable where T : class
     {
-        Task<IEnumerable<T>> GetAll();
+        Task<List<T>> Get();
 
         Task<T> Get(int id);
 
