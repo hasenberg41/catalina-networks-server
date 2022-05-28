@@ -1,6 +1,6 @@
 using CatalinaNetworks.DataBase;
 using Microsoft.EntityFrameworkCore;
-
+//Say my name
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
