@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatalinaNetworks.DataBase.Migrations
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20220524181710_InitDb")]
+    [Migration("20220528141333_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,7 @@ namespace CatalinaNetworks.DataBase.Migrations
                     b.HasOne("CatalinaNetworks.DataBase.Entities.User", "User")
                         .WithOne("Photos")
                         .HasForeignKey("CatalinaNetworks.DataBase.Entities.Photos", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

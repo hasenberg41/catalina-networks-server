@@ -68,7 +68,7 @@ namespace CatalinaNetworks.DataBase.Migrations
                     b.HasOne("CatalinaNetworks.DataBase.Entities.User", "User")
                         .WithOne("Photos")
                         .HasForeignKey("CatalinaNetworks.DataBase.Entities.Photos", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

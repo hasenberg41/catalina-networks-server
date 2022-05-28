@@ -1,4 +1,5 @@
 ﻿using CatalinaNetworks.DataBase.Entities;
+using CatalinaNetworks.DataBase.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalinaNetworks.DataBase
@@ -11,10 +12,10 @@ namespace CatalinaNetworks.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new PhotosConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
 
-            modelBuilder.Entity<User>().HasKey(u => u.Id);
-            modelBuilder.Entity<Photos>().HasKey(p => p.UserId);
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<User> Users { get; set; }
