@@ -23,33 +23,33 @@ namespace CatalinaNetworks.DataBase
             base.OnModelCreating(modelBuilder);
         }
 
-        public Task<List<Core.Models.User>> Get(CancellationToken cancellationToken)
+        public Task<List<Core.Models.User>> Get(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken)
+        public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken = default)
         {
             var user = await Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
             throw new NotImplementedException();
         }
 
-        public Task<int> Create(Core.Models.User item, CancellationToken cancellationToken)
+        public Task<int> Create(Core.Models.User item, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(Core.Models.User item, CancellationToken cancellationToken)
+        public Task Update(Core.Models.User item, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task Delete(Core.Models.User item, CancellationToken cancellationToken)
+        public Task Delete(Core.Models.User item, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task Save(CancellationToken cancellationToken)
+        public Task Save(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

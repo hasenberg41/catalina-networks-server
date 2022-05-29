@@ -7,10 +7,11 @@
         public UsersDbContextTest(TestDatabaseFixture fixtureDb) => FixtureDb = fixtureDb;
 
         [Fact]
-        public void GetUsers_ShouldReturnUsersList()
+        public async Task GetUsers_ShouldReturnUsersList()
         {
             using var context = FixtureDb.CreateContext();
 
+            var users = await context.Get();
         }
     }
 }
