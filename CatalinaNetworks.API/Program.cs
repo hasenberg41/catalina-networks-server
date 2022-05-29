@@ -9,8 +9,12 @@ builder.Services.AddCors();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+// Пока слои логики не реализованы, контроллер использует методы контекста
+// контекста базы данных напрямую для тестирования frontend части
 builder.Services.AddDbContext<UsersDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"))); // TODO : не соответствует DI
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

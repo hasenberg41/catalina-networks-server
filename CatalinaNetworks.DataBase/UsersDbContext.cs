@@ -1,14 +1,15 @@
-﻿using CatalinaNetworks.Core.Repositories;
-using CatalinaNetworks.DataBase.Entities;
+﻿using CatalinaNetworks.Core.Exceptions;
+using CatalinaNetworks.Core.Repositories;
 using CatalinaNetworks.DataBase.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace CatalinaNetworks.DataBase
 {
-    public class UsersDbContext : DbContext, IRepository<User>
-    {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Photos> Photos { get; set; }
+    public class UsersDbContext : DbContext, IRepository<Core.Models.User>
+    {// TODO : Реализовать интерфейс и написать тесты
+        public DbSet<Entities.User> Users { get; set; }
+        public DbSet<Entities.Photos> Photos { get; set; }
 
         public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
         {
@@ -22,34 +23,35 @@ namespace CatalinaNetworks.DataBase
             base.OnModelCreating(modelBuilder);
         }
 
-        public Task<List<User>> Get()
-        {
-            return Users.AsNoTracking().ToListAsync();
-        }
-
-        public Task<User> Get(int id)
-        {
-            return Users.AsNoTracking().FirstAsync(u => u.Id == id);
-        }
-
-        public Task<int> Create(User item)
+        public Task<List<Core.Models.User>> Get(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(User item)
+        public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken)
+        {
+            var user = await Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            throw new NotImplementedException();
+        }
+
+        public Task<int> Create(Core.Models.User item, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task Delete(User item)
+        public Task Update(Core.Models.User item, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public async Task Save()
+        public Task Delete(Core.Models.User item, CancellationToken cancellationToken)
         {
-            await SaveChangesAsync();
+            throw new NotImplementedException();
+        }
+
+        public Task Save(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
