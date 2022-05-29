@@ -3,6 +3,8 @@ using CatalinaNetworks.DataBase;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using CatalinaNetworks.API.Middleware;
+
 //Say my name
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCustomExceptionHundler();
 
 app.UseHttpsRedirection();
 

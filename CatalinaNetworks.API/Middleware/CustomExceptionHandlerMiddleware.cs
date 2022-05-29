@@ -1,4 +1,7 @@
 ﻿using System.Net;
+using System.Text.Json;
+using CatalinaNetworks.Core.Exceptions;
+using FluentValidation;
 
 namespace CatalinaNetworks.API.Middleware
 {
@@ -24,7 +27,27 @@ namespace CatalinaNetworks.API.Middleware
         {
             var code = HttpStatusCode.InternalServerError;
             string result = string.Empty;
-            // TODO : доделать обработку исключений
+
+            switch (exception)
+            {
+                case ValidationException validationException:
+                    code = HttpStatusCode.BadRequest;
+                    result = JsonSerializer.Serialize(validationException.Errors);
+                    break;
+                case NotFoundException:
+                    code = HttpStatusCode.NotFound;
+                    break;
+            }
+
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)code;
+
+            if (result == string.Empty)
+            {
+                result = JsonSerializer.Serialize(new { error = exception.Message });
+            }
+
+            return httpContext.Response.WriteAsync(result);
         }
     }
 }
