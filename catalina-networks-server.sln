@@ -7,9 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalinaNetworks.DataBase",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalinaNetworks.API", "CatalinaNetworks.API\CatalinaNetworks.API.csproj", "{AA41E882-2C55-47FD-A60C-1E815CDF66CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalinaNetworks.Core", "CatalinaNetworks.Core\CatalinaNetworks.Core.csproj", "{C1DBC785-DDA9-4D0E-9380-19546ED1756C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalinaNetworks.Core", "CatalinaNetworks.Core\CatalinaNetworks.Core.csproj", "{C1DBC785-DDA9-4D0E-9380-19546ED1756C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalinaNetworks.BusinessLogic", "CatalinaNetworks.BusinessLogic\CatalinaNetworks.BusinessLogic.csproj", "{9468C60F-50DD-4DBB-AC41-D23F0287C1FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalinaNetworks.BusinessLogic", "CatalinaNetworks.BusinessLogic\CatalinaNetworks.BusinessLogic.csproj", "{9468C60F-50DD-4DBB-AC41-D23F0287C1FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AAEE0B26-6E52-4289-AA88-436E415455AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalinaNetworks.DataBase.Tests", "CatalinaNetworks.DataBase.Tests\CatalinaNetworks.DataBase.Tests.csproj", "{B3EC5F60-3007-4B3A-97BC-B55DCCE41682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalinaNetworks.BusinessLogic.Tests", "CatalinaNetworks.BusinessLogic.Tests\CatalinaNetworks.BusinessLogic.Tests.csproj", "{DF0CB013-F840-4D15-B2F9-DD21FBF07A2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +39,21 @@ Global
 		{9468C60F-50DD-4DBB-AC41-D23F0287C1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9468C60F-50DD-4DBB-AC41-D23F0287C1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9468C60F-50DD-4DBB-AC41-D23F0287C1FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3EC5F60-3007-4B3A-97BC-B55DCCE41682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EC5F60-3007-4B3A-97BC-B55DCCE41682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EC5F60-3007-4B3A-97BC-B55DCCE41682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EC5F60-3007-4B3A-97BC-B55DCCE41682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF0CB013-F840-4D15-B2F9-DD21FBF07A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF0CB013-F840-4D15-B2F9-DD21FBF07A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF0CB013-F840-4D15-B2F9-DD21FBF07A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF0CB013-F840-4D15-B2F9-DD21FBF07A2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3EC5F60-3007-4B3A-97BC-B55DCCE41682} = {AAEE0B26-6E52-4289-AA88-436E415455AB}
+		{DF0CB013-F840-4D15-B2F9-DD21FBF07A2E} = {AAEE0B26-6E52-4289-AA88-436E415455AB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4473E71C-F6E3-4B62-A60C-C159538CA2E0}
