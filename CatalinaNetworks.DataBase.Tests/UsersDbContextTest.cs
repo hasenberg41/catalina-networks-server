@@ -1,4 +1,7 @@
-﻿namespace CatalinaNetworks.DataBase.Tests
+﻿
+using CatalinaNetworks.DataBase.Entities;
+
+namespace CatalinaNetworks.DataBase.Tests
 {
     public class UsersDbContextTest : IClassFixture<TestDatabaseFixture>
     {
@@ -12,6 +15,8 @@
             using var context = FixtureDb.CreateContext();
 
             var users = await context.Get();
+
+            Assert.Equal((IEnumerable<User>)users, (IEnumerable<User>)FixtureDb.Users);
         }
     }
 }
