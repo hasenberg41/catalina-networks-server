@@ -1,3 +1,4 @@
+using CatalinaNetworks.API.Profiles;
 using CatalinaNetworks.DataBase;
 using Microsoft.EntityFrameworkCore;
 //Say my name
@@ -10,6 +11,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<ApiUserMappingProfile>();
+    cfg.AddProfile<DBUserMappingProfile>();
+});
+
 // Пока слои логики не реализованы, контроллер использует методы контекста
 // контекста базы данных напрямую для тестирования frontend части
 builder.Services.AddDbContext<UsersDbContext>(options => 
@@ -19,7 +26,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -29,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthorization();
 

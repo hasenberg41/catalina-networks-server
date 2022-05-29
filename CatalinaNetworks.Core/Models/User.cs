@@ -8,9 +8,9 @@ namespace CatalinaNetworks.Core.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public int Id { get; }
 
-        public string Name { get; set; } = "";
+        public string Name { get; set; } = null!;
 
         public string? UniqueUrlName { get; set; }
 

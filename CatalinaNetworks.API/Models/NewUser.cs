@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CatalinaNetworks.API.Models
+﻿namespace CatalinaNetworks.API.Models
 {
-    public class User
+    public class NewUser
     {
-        public int Id { get; }
-
-        [Required]
         public string Name { get; set; } = null!;
 
         public string? UniqueUrlName { get; set; }
