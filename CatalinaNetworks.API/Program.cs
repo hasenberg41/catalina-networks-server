@@ -20,7 +20,7 @@ builder.Services.AddAutoMapper(cfg =>
 // Пока слои логики не реализованы, контроллер использует методы контекста
 // контекста базы данных напрямую для тестирования frontend части
 builder.Services.AddDbContext<UsersDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"))); // TODO : не соответствует DI
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 
 builder.Services.AddSwaggerGen();
 
