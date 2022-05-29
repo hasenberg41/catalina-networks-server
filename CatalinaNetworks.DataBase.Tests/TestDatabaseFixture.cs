@@ -51,7 +51,7 @@ namespace CatalinaNetworks.DataBase.Tests
             }
         }
 
-        private UsersDbContext CreateContext() 
+        public UsersDbContext CreateContext() 
             => new UsersDbContext(
                 new DbContextOptionsBuilder<UsersDbContext>()
                 .UseSqlServer(ConnectionString)
