@@ -2,16 +2,16 @@
 {
     public interface IRepository<T> : IDisposable where T : class
     {
-        Task<List<T>> Get(CancellationToken cancellationToken);
+        Task<List<T>> Get(CancellationToken cancellationToken = default);
 
-        Task<T> Get(int id, CancellationToken cancellationToken);
+        Task<T> Get(int id, CancellationToken cancellationToken = default);
 
-        Task<int> Create(T item, CancellationToken cancellationToken);
+        Task<int> Create(T item, CancellationToken cancellationToken = default);
 
-        Task Update(T item, CancellationToken cancellationToken);
+        Task Update(T item, CancellationToken cancellationToken = default);
 
-        Task Delete(T item, CancellationToken cancellationToken);
+        Task Delete(T item, CancellationToken cancellationToken = default);
 
-        Task Save(CancellationToken cancellationToken);
+        Task Save(CancellationToken cancellationToken = default);
     }
 }
