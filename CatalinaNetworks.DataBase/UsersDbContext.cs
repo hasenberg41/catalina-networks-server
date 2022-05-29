@@ -8,11 +8,14 @@ namespace CatalinaNetworks.DataBase
 {
     public class UsersDbContext : DbContext, IRepository<Core.Models.User>
     {// TODO : Реализовать интерфейс и написать тесты
+        private readonly IMapper _mapper;
+
         public DbSet<Entities.User> Users { get; set; }
         public DbSet<Entities.Photos> Photos { get; set; }
 
-        public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
+        public UsersDbContext(DbContextOptions<UsersDbContext> options, IMapper mapper) : base(options)
         {
+            _mapper = mapper;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,9 +26,11 @@ namespace CatalinaNetworks.DataBase
             base.OnModelCreating(modelBuilder);
         }
 
-        public Task<List<Core.Models.User>> Get(CancellationToken cancellationToken = default)
+        public async Task<List<Core.Models.User>> Get(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var userEntities = await Users.AsNoTracking().ToListAsync();
+            var users = userEntities.Select(u => _mapper.Map<Core.Models.User>(u));
+            return users.ToList();
         }
 
         public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken = default)

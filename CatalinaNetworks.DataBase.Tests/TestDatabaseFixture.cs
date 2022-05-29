@@ -1,3 +1,5 @@
+using AutoMapper;
+
 namespace CatalinaNetworks.DataBase.Tests
 {
     public class TestDatabaseFixture
@@ -6,6 +8,9 @@ namespace CatalinaNetworks.DataBase.Tests
 
         private static readonly object _lock = new();
         private static bool _databaseInitialized;
+
+        public IMapper Mapper { get; set; } = null!;
+
 
         public List<Entities.User> Users
         {
@@ -47,8 +52,16 @@ namespace CatalinaNetworks.DataBase.Tests
             }
         }
 
+
         public TestDatabaseFixture()
         {
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<DBUserMappingProfile>();
+            });
+
+            Mapper = new Mapper(mapperConfig);
+
             lock (_lock)
             {
                 if (!_databaseInitialized)
@@ -57,6 +70,8 @@ namespace CatalinaNetworks.DataBase.Tests
                     {
                         context.Database.EnsureDeleted();
                         context.Database.EnsureCreated();
+
+                        _databaseInitialized = true;
 
                         context.Users.AddRange(Users);
                     }
@@ -68,6 +83,6 @@ namespace CatalinaNetworks.DataBase.Tests
             => new UsersDbContext(
                 new DbContextOptionsBuilder<UsersDbContext>()
                 .UseSqlServer(ConnectionString)
-                .Options);
+                .Options, Mapper);
     }
 }
