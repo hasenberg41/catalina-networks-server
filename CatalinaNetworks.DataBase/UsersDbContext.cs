@@ -45,17 +45,21 @@ namespace CatalinaNetworks.DataBase
             return _mapper.Map<Core.Models.User>(user);
         }
 
-        public Task<int> Create(Core.Models.User item, CancellationToken cancellationToken = default)
+        public async Task<int> Create(Core.Models.User newUser, CancellationToken cancellationToken = default)
+        {
+            var userEntity = _mapper.Map<Entities.User>(newUser);
+            var resultUser = await AddAsync(userEntity, cancellationToken);
+            await Save(cancellationToken);
+
+            return resultUser.Entity.Id;
+        }
+
+        public Task Update(Core.Models.User user, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(Core.Models.User item, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Delete(Core.Models.User item, CancellationToken cancellationToken = default)
+        public Task Delete(Core.Models.User user, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

@@ -4,6 +4,7 @@ namespace CatalinaNetworks.DataBase.Tests
 {
     public class UsersDbContextTest : IClassFixture<TestDatabaseFixture>
     {
+        private readonly Fixture fixture = new();
         public TestDatabaseFixture FixtureDb { get; private set; }
 
         public UsersDbContextTest(TestDatabaseFixture fixtureDb) => FixtureDb = fixtureDb;
@@ -30,6 +31,21 @@ namespace CatalinaNetworks.DataBase.Tests
             var user = await context.Get(id);
             AssertExtentions.EqualUsers(exceptedUser, user);
             Assert.Equal(id, user.Id);
+        }
+
+        [Fact]
+        public async Task CreateUser_ShouldReturnUserId()
+        {
+            using var context = FixtureDb.CreateContext();
+            var exceptedId = TestDatabaseFixture.Users.Length + 1;
+            var newUser = fixture.Create<Core.Models.User>();
+
+            var returnId = await context.Create(newUser);
+            var resultId = (await context.Get(returnId)).Id;
+
+            Assert.Equal(returnId, resultId);
+            Assert.Equal(exceptedId, resultId);
+            Assert.Equal(exceptedId, returnId);
         }
     }
 }
