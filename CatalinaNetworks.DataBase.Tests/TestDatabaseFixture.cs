@@ -22,32 +22,17 @@ namespace CatalinaNetworks.DataBase.Tests
                     {
                         Name = "Валера",
                         UniqueUrlName = "awdasdasa",
-                        Photos = new Entities.Photos()
-                        {
-                            Small = "test-small.jpg",
-                            Large = "test-large.jpg"
-                        }
                     }, 
                     new Entities.User()
                     {
                         Name = "Жорик",
                         UniqueUrlName = "wdwqqwewqe",
-                        Photos = new Entities.Photos()
-                        {
-                            Small = "test-small.jpg",
-                            Large = "test-large.jpg"
-                        }
                     }, 
                     new Entities.User()
                     {
                         Name = "Саня",
                         UniqueUrlName = "sdawscxcx",
-                        Photos = new Entities.Photos()
-                        {
-                            Small = "test-small.jpg",
-                            Large = "test-large.jpg"
-                        }
-                    } 
+                    }
                 };
             }
         }
