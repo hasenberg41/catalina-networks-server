@@ -28,9 +28,12 @@ namespace CatalinaNetworks.DataBase
 
         public async Task<IEnumerable<Core.Models.User>> Get(CancellationToken cancellationToken = default)
         {
-            var userEntities = await Users.AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
+            var userEntities = await Users.AsNoTracking()
+                .Include(u => u.Photos)
+                .ToListAsync(cancellationToken: cancellationToken);
+
             var users = userEntities.Select(u => _mapper.Map<Core.Models.User>(u));
-            return users.ToList();
+            return users;
         }
 
         public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken = default)

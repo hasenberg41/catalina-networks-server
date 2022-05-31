@@ -1,4 +1,5 @@
 using AutoMapper;
+using CatalinaNetworks.DataBase.Entities;
 
 namespace CatalinaNetworks.DataBase.Tests
 {
@@ -12,26 +13,31 @@ namespace CatalinaNetworks.DataBase.Tests
         public IMapper Mapper { get; set; } = null!;
 
 
-        public List<Entities.User> Users
+        public static User[] Users
         {
             get
             {
-                return new List<Entities.User>
+                return new User[]
                 {
-                    new Entities.User()
+                    new User()
                     {
                         Name = "Валера",
                         UniqueUrlName = "awdasdasa",
+                        Photos = new Photos
+                        {
+                            Small = "test-small.jpg",
+                            Large = "test-large.jpg"
+                        }
                     }, 
-                    new Entities.User()
+                    new User()
                     {
                         Name = "Жорик",
-                        UniqueUrlName = "wdwqqwewqe",
+                        UniqueUrlName = "wdwqqwewqe"
                     }, 
-                    new Entities.User()
+                    new User()
                     {
                         Name = "Саня",
-                        UniqueUrlName = "sdawscxcx",
+                        UniqueUrlName = "sdawscxcx"
                     }
                 };
             }
@@ -56,8 +62,7 @@ namespace CatalinaNetworks.DataBase.Tests
                     context.Database.EnsureCreated();
 
                     _databaseInitialized = true;
-
-                    context.Users.AddRange(Users);
+                    context.AddRange(Users);
                     context.SaveChanges();
                 }
             }
