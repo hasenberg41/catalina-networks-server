@@ -18,15 +18,18 @@ namespace CatalinaNetworks.DataBase.Tests
             AssertExtentions.EqualUsers(exceptedUsers, users);
         }
 
-        [Fact]
-        public async Task GetUser_ShouldReturnUserById()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public async Task GetUser_ShouldReturnUserById(int id)
         {
             using var context = FixtureDb.CreateContext();
-            var exceptedUser = FixtureDb.Mapper.Map<Core.Models.User>(TestDatabaseFixture.Users[0]);
+            var exceptedUser = FixtureDb.Mapper.Map<Core.Models.User>(TestDatabaseFixture.Users[id - 1]);
 
-            var user = await context.Get(1);
+            var user = await context.Get(id);
             AssertExtentions.EqualUsers(exceptedUser, user);
-            Assert.Equal(1, user.Id);
+            Assert.Equal(id, user.Id);
         }
     }
 }
