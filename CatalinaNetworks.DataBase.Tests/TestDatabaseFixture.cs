@@ -8,7 +8,7 @@ namespace CatalinaNetworks.DataBase.Tests
         private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=CatalinaNetworksDbTests;Trusted_Connection=True";
 
         private static readonly object _lock = new();
-        private static bool _databaseInitialized;
+        private static bool _databaseInitialized = false;
 
         public IMapper Mapper { get; set; } = null!;
 
