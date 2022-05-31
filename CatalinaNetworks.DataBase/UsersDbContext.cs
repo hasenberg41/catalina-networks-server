@@ -38,8 +38,11 @@ namespace CatalinaNetworks.DataBase
 
         public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken = default)
         {
-            var user = await Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
-            throw new NotImplementedException();
+            var user = await Users.AsNoTracking()
+                .Include(u => u.Photos)
+                .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+            return _mapper.Map<Core.Models.User>(user);
         }
 
         public Task<int> Create(Core.Models.User item, CancellationToken cancellationToken = default)
