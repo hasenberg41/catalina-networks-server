@@ -38,9 +38,15 @@ namespace CatalinaNetworks.DataBase
 
         public async Task<Core.Models.User> Get(int id, CancellationToken cancellationToken = default)
         {
+            if (id <= 0)
+                throw new NotFoundException(nameof(Entities.User), id);
+
             var user = await Users.AsNoTracking()
                 .Include(u => u.Photos)
                 .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+            if (user == null)
+                throw new NotFoundException(nameof(Entities.User), id);
 
             return _mapper.Map<Core.Models.User>(user);
         }

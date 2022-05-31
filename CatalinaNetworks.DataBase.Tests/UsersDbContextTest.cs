@@ -1,4 +1,5 @@
-﻿using CatalinaNetworks.DataBase.Entities;
+﻿using CatalinaNetworks.Core.Exceptions;
+using CatalinaNetworks.DataBase.Entities;
 
 namespace CatalinaNetworks.DataBase.Tests
 {
@@ -31,6 +32,17 @@ namespace CatalinaNetworks.DataBase.Tests
             var user = await context.Get(id);
             AssertExtentions.EqualUsers(exceptedUser, user);
             Assert.Equal(id, user.Id);
+        }
+
+        [Theory]
+        [InlineData(23)]
+        [InlineData(34)]
+        [InlineData(215)]
+        public async Task GetUser_ShouldThrowNotFoundException(int id)
+        {
+            using var context = FixtureDb.CreateContext();
+
+            await Assert.ThrowsAsync<NotFoundException>(async () => await context.Get(id));
         }
 
         [Fact]
