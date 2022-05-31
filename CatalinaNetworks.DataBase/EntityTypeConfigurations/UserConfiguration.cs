@@ -8,7 +8,7 @@ namespace CatalinaNetworks.DataBase.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(u => u.Id).IsClustered();
+            builder.HasKey(u => u.Id);
             builder.Property(u => u.Name).HasMaxLength(100).IsRequired();
             builder.Property(u => u.UniqueUrlName).HasMaxLength(300).IsRequired(false);
             builder.HasOne(u => u.Photos).WithOne(s => s.User).OnDelete(DeleteBehavior.NoAction);

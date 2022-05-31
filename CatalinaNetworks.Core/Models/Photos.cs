@@ -10,9 +10,9 @@ namespace CatalinaNetworks.Core.Models
     {
         public int UserId { get; set; }
 
-        public string Large { get; set; } = "";
+        public string Large { get; set; } = null!;
 
-        public string Small { get; set; } = "";
+        public string Small { get; set; } = null!;
 
     }
 }
