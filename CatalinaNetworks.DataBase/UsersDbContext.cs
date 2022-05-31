@@ -7,7 +7,7 @@ using AutoMapper;
 namespace CatalinaNetworks.DataBase
 {
     public class UsersDbContext : DbContext, IRepository<Core.Models.User>
-    {// TODO : Реализовать интерфейс и написать тесты
+    {
         private readonly IMapper _mapper;
 
         public DbSet<Entities.User> Users { get; set; }

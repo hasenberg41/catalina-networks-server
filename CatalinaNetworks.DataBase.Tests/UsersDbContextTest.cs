@@ -87,7 +87,7 @@ namespace CatalinaNetworks.DataBase.Tests
         }
 
         [Fact]
-        public async Task DeleteUser_ShouldThrowNotFoundException()
+        public async Task DeleteUser_CheckUsers_ShouldThrowNotFoundException()
         {
             var newUser = fixture.Create<Core.Models.User>();
             int returnId = default;
@@ -106,6 +106,27 @@ namespace CatalinaNetworks.DataBase.Tests
             using (var context = FixtureDb.CreateContext())
             {
                 await Assert.ThrowsAsync<NotFoundException>(async () => await context.Get(returnId));
+            }
+        }
+
+        [Fact]
+        public async Task DeleteUser_CheckPhotos_ShouldNotFoundPhotosDto()
+        {
+            var newUser = fixture.Create<Core.Models.User>();
+            int returnId = default;
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                returnId = await context.Create(newUser);
+            }
+            newUser.Id = returnId;
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                await context.Delete(newUser);
+
+                var photosEntity = context.Photos.FirstOrDefault(p => p.UserId == returnId);
+                Assert.Null(photosEntity);
             }
         }
     }
