@@ -6,7 +6,8 @@ namespace CatalinaNetworks.DataBase
     {
         public DBUserMappingProfile()
         {
-            CreateMap<Entities.Photos, Core.Models.User>().ReverseMap();
+            CreateMap<Entities.User, Core.Models.User>().ReverseMap();
+            CreateMap<Entities.Photos, Core.Models.Photos>().ReverseMap();
         }
     }
 }

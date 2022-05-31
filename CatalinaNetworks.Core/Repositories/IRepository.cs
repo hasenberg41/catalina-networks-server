@@ -2,7 +2,7 @@
 {
     public interface IRepository<T> : IDisposable where T : class
     {
-        Task<List<T>> Get(CancellationToken cancellationToken = default);
+        Task<IEnumerable<T>> Get(CancellationToken cancellationToken = default);
 
         Task<T> Get(int id, CancellationToken cancellationToken = default);
 

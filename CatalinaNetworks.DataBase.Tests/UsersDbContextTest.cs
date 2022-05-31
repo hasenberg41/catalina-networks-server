@@ -12,11 +12,11 @@ namespace CatalinaNetworks.DataBase.Tests
         public async Task GetUsers_ShouldReturnUsersList()
         {
             using var context = FixtureDb.CreateContext();
-            //var exceptedUsers = FixtureDb.Users.Select(u => FixtureDb.Mapper.Map<Core.Models.User>(u)).ToList();
+            var exceptedUsers = FixtureDb.Users.Select(u => FixtureDb.Mapper.Map<Core.Models.User>(u));
 
             var users = await context.Get();
 
-            //Assert.Equal((IEnumerable<User>)users, (IEnumerable<User>)exceptedUsers);
+            Assert.Equal(exceptedUsers, users);
             // TODO : разобраться
         }
     }

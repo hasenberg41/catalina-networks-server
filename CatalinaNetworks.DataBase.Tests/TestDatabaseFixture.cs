@@ -21,31 +21,31 @@ namespace CatalinaNetworks.DataBase.Tests
                     new Entities.User()
                     {
                         Name = "Валера",
-                        UniqueUrlName = Guid.NewGuid().ToString(),
+                        UniqueUrlName = "awdasdasa",
                         Photos = new Entities.Photos()
                         {
-                            Small = Guid.NewGuid().ToString(),
-                            Large = Guid.NewGuid().ToString()
+                            Small = "test-small.jpg",
+                            Large = "test-large.jpg"
                         }
                     }, 
                     new Entities.User()
                     {
                         Name = "Жорик",
-                        UniqueUrlName = Guid.NewGuid().ToString(),
+                        UniqueUrlName = "wdwqqwewqe",
                         Photos = new Entities.Photos()
                         {
-                            Small = Guid.NewGuid().ToString(),
-                            Large = Guid.NewGuid().ToString()
+                            Small = "test-small.jpg",
+                            Large = "test-large.jpg"
                         }
                     }, 
                     new Entities.User()
                     {
                         Name = "Саня",
-                        UniqueUrlName = Guid.NewGuid().ToString(),
+                        UniqueUrlName = "sdawscxcx",
                         Photos = new Entities.Photos()
                         {
-                            Small = Guid.NewGuid().ToString(),
-                            Large = Guid.NewGuid().ToString()
+                            Small = "test-small.jpg",
+                            Large = "test-large.jpg"
                         }
                     } 
                 };
@@ -66,21 +66,20 @@ namespace CatalinaNetworks.DataBase.Tests
             {
                 if (!_databaseInitialized)
                 {
-                    using (var context = CreateContext())
-                    {
-                        context.Database.EnsureDeleted();
-                        context.Database.EnsureCreated();
+                    using var context = CreateContext();
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
 
-                        _databaseInitialized = true;
+                    _databaseInitialized = true;
 
-                        context.Users.AddRange(Users);
-                    }
+                    context.Users.AddRange(Users);
+                    context.SaveChanges();
                 }
             }
         }
 
         public UsersDbContext CreateContext()
-            => new UsersDbContext(
+            => new(
                 new DbContextOptionsBuilder<UsersDbContext>()
                 .UseSqlServer(ConnectionString)
                 .Options, Mapper);

@@ -26,9 +26,9 @@ namespace CatalinaNetworks.DataBase
             base.OnModelCreating(modelBuilder);
         }
 
-        public async Task<List<Core.Models.User>> Get(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Core.Models.User>> Get(CancellationToken cancellationToken = default)
         {
-            var userEntities = await Users.AsNoTracking().ToListAsync();
+            var userEntities = await Users.AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
             var users = userEntities.Select(u => _mapper.Map<Core.Models.User>(u));
             return users.ToList();
         }
@@ -54,9 +54,9 @@ namespace CatalinaNetworks.DataBase
             throw new NotImplementedException();
         }
 
-        public Task Save(CancellationToken cancellationToken = default)
+        public async Task Save(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await SaveChangesAsync(cancellationToken);
         }
     }
 }
