@@ -85,5 +85,28 @@ namespace CatalinaNetworks.DataBase.Tests
 
             AssertExtentions.EqualUsers(updatedUser, returnedUser);
         }
+
+        [Fact]
+        public async Task DeleteUser_ShouldSuccess()
+        {
+            var newUser = fixture.Create<Core.Models.User>();
+            int returnId = default;
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                returnId = await context.Create(newUser);
+            }
+            newUser.Id = returnId;
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                await context.Delete(newUser);
+            }
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                await Assert.ThrowsAsync<NotFoundException>(async () => await context.Get(returnId));
+            }
+        }
     }
 }

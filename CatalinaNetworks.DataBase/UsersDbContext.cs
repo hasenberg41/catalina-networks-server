@@ -85,9 +85,24 @@ namespace CatalinaNetworks.DataBase
             }
         }
 
-        public Task Delete(Core.Models.User user, CancellationToken cancellationToken = default)
+        public async Task Delete(Core.Models.User user, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (user.Id <= 0
+                || await Users.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken) == null)
+            {
+                throw new NotFoundException(nameof(user), user.Id);
+            }
+
+            var userEntity = _mapper.Map<Entities.User>(user);
+            userEntity.Id = user.Id;
+
+            if (userEntity.Photos != null)
+                Attach(userEntity.Photos).State = EntityState.Deleted;
+
+            Attach(userEntity).State = EntityState.Deleted;
+
+            await Save(cancellationToken);
         }
 
         public async Task Save(CancellationToken cancellationToken = default)
