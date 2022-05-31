@@ -3,7 +3,7 @@ using CatalinaNetworks.DataBase.Entities;
 
 namespace CatalinaNetworks.DataBase.Tests
 {
-    public class TestDatabaseFixture
+    public class TestDatabaseFixture : IDisposable
     {
         private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=CatalinaNetworksDbTests;Trusted_Connection=True";
 
@@ -52,7 +52,11 @@ namespace CatalinaNetworks.DataBase.Tests
             });
 
             Mapper = new Mapper(mapperConfig);
+            Reset();
+        }
 
+        public void Reset()
+        {
             lock (_lock)
             {
                 if (!_databaseInitialized)
@@ -73,5 +77,14 @@ namespace CatalinaNetworks.DataBase.Tests
                 new DbContextOptionsBuilder<UsersDbContext>()
                 .UseSqlServer(ConnectionString)
                 .Options, Mapper);
+
+        public void Dispose()
+        {
+            if (_databaseInitialized)
+            {
+                using var context = CreateContext();
+                context.Database.EnsureDeleted();
+            }
+        }
     }
 }

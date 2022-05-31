@@ -8,7 +8,7 @@ namespace CatalinaNetworks.DataBase.Tests.Extentions
         {
             var users1 = users.ToList();
             var users2 = exceptedUsers.ToList();
-            for (int i = 0; i < users1.Count; i++)
+            for (int i = 0; i < users2.Count; i++)
             {
                 EqualUsers(users1[i], users2[i]);
             }

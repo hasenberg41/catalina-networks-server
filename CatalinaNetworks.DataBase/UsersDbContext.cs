@@ -60,9 +60,29 @@ namespace CatalinaNetworks.DataBase
             return resultUser.Entity.Id;
         }
 
-        public Task Update(Core.Models.User user, CancellationToken cancellationToken = default)
+        public async Task Update(Core.Models.User user, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var userEntity = await Users.Include(u => u.Photos)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken);
+
+            if (userEntity != null)
+            {
+                userEntity = _mapper.Map<Entities.User>(user);
+                userEntity.Id = user.Id;
+
+                Attach(userEntity).State = EntityState.Modified;
+
+                if (userEntity.Photos != null)
+                    Attach(userEntity.Photos).State = EntityState.Modified;
+                
+                await Save(cancellationToken);
+            }
+            else
+            {
+                throw new NotFoundException(nameof(user), user.Id);
+                throw new InvalidUpdateException(nameof(user), user.Id);
+            }
         }
 
         public Task Delete(Core.Models.User user, CancellationToken cancellationToken = default)

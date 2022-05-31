@@ -16,7 +16,9 @@ namespace CatalinaNetworks.DataBase.Tests
             using var context = FixtureDb.CreateContext();
             var exceptedUsers = TestDatabaseFixture.Users.Select(u => FixtureDb.Mapper.Map<Core.Models.User>(u));
 
+            FixtureDb.Reset();
             var users = await context.Get();
+
             AssertExtentions.EqualUsers(exceptedUsers, users);
         }
 
@@ -38,6 +40,8 @@ namespace CatalinaNetworks.DataBase.Tests
         [InlineData(23)]
         [InlineData(34)]
         [InlineData(215)]
+        [InlineData(-215)]
+        [InlineData(0)]
         public async Task GetUser_ShouldThrowNotFoundException(int id)
         {
             using var context = FixtureDb.CreateContext();
@@ -49,15 +53,37 @@ namespace CatalinaNetworks.DataBase.Tests
         public async Task CreateUser_ShouldReturnUserId()
         {
             using var context = FixtureDb.CreateContext();
-            var exceptedId = TestDatabaseFixture.Users.Length + 1;
             var newUser = fixture.Create<Core.Models.User>();
 
             var returnId = await context.Create(newUser);
             var resultId = (await context.Get(returnId)).Id;
 
             Assert.Equal(returnId, resultId);
-            Assert.Equal(exceptedId, resultId);
-            Assert.Equal(exceptedId, returnId);
+        }
+
+        [Fact]
+        public async Task UpdateUser_ShouldSuccessUpdatedUser()
+        {
+            var newUser = fixture.Create<Core.Models.User>();
+            var updatedUser = fixture.Create<Core.Models.User>();
+            Core.Models.User? returnedUser = null;
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                updatedUser.Id = await context.Create(newUser);
+            }
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                await context.Update(updatedUser);
+            }
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                returnedUser = await context.Get(updatedUser.Id);
+            }
+
+            AssertExtentions.EqualUsers(updatedUser, returnedUser);
         }
     }
 }
