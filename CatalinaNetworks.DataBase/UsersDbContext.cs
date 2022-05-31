@@ -97,10 +97,10 @@ namespace CatalinaNetworks.DataBase
             var userEntity = _mapper.Map<Entities.User>(user);
             userEntity.Id = user.Id;
 
+            Attach(userEntity).State = EntityState.Deleted;
+            
             if (userEntity.Photos != null)
                 Attach(userEntity.Photos).State = EntityState.Deleted;
-
-            Attach(userEntity).State = EntityState.Deleted;
 
             await Save(cancellationToken);
         }
