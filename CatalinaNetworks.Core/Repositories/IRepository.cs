@@ -1,8 +1,12 @@
-﻿namespace CatalinaNetworks.Core.Repositories
+﻿using CatalinaNetworks.Core.Models.Paggination;
+
+namespace CatalinaNetworks.Core.Repositories
 {
     public interface IRepository<T> : IDisposable where T : class
     {
         Task<IEnumerable<T>> Get(CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<T>> Get(QuerryParameters querryParameters, CancellationToken cancellationToken = default);
 
         Task<T> Get(int id, CancellationToken cancellationToken = default);
 

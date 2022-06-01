@@ -1,4 +1,5 @@
 ﻿using CatalinaNetworks.Core.Exceptions;
+using CatalinaNetworks.Core.Models.Paggination;
 using CatalinaNetworks.DataBase.Entities;
 
 namespace CatalinaNetworks.DataBase.Tests
@@ -20,6 +21,40 @@ namespace CatalinaNetworks.DataBase.Tests
             var users = await context.Get();
 
             AssertExtentions.EqualUsers(exceptedUsers, users);
+        }
+
+        [Theory]
+        [InlineData(20)]
+        [InlineData(34)]
+        [InlineData(2)]
+        public async Task GetUsersPage_ShouldReturnUsersPage(int count)
+        {
+            var users = FixtureDb.Mapper.Map<IEnumerable<Core.Models.User>>(TestDatabaseFixture.Users);
+            var addCoreUsers = users.Append(fixture.CreateMany<Core.Models.User>(count));
+
+            var addUsers = FixtureDb.Mapper.Map<IEnumerable<User>>(addCoreUsers);
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                context.AddRange(addUsers);
+            }
+
+            using (var context = FixtureDb.CreateContext())
+            {
+                for (int i = 1; i < count / 2; i++)
+                {
+                    var queryParameters = new QuerryParameters
+                    {
+                        PageNumber = i,
+                        PageSize = count / 2
+                    };
+
+                    var firstPage = await context.Get(queryParameters);
+                    AssertExtentions.EqualUsers(addCoreUsers
+                        .Skip((i - 1) * (count / 2))
+                        .Take(count / 2), firstPage);
+                }
+            }// TODO : make test
         }
 
         [Theory]

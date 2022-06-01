@@ -1,6 +1,6 @@
 ﻿namespace CatalinaNetworks.Core.Models.Paggination
 {
-    public class UserParameters
+    public class QuerryParameters
     {
         const int maxPageSize = 50;
         private int _pageSize = 10;

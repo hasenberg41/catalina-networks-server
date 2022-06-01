@@ -3,6 +3,7 @@ using CatalinaNetworks.Core.Repositories;
 using CatalinaNetworks.DataBase.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using CatalinaNetworks.Core.Models.Paggination;
 
 namespace CatalinaNetworks.DataBase
 {
@@ -108,6 +109,18 @@ namespace CatalinaNetworks.DataBase
         public async Task Save(CancellationToken cancellationToken = default)
         {
             await SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Core.Models.User>> Get(QuerryParameters querryParameters, CancellationToken cancellationToken = default)
+        {
+            var usersEntity = await Users
+                .AsNoTracking()
+                .Include(u => u.Photos)
+                .OrderBy(u => u.Name)
+                .Skip((querryParameters.PageNumber - 1) * querryParameters.PageSize)
+                .Take(querryParameters.PageSize).ToListAsync(cancellationToken);
+
+            return _mapper.Map<IEnumerable<Core.Models.User>>(usersEntity);
         }
     }
 }
