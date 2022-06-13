@@ -6,7 +6,7 @@ namespace CatalinaNetworks.Core.Repositories
     {
         Task<IEnumerable<T>> Get(CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<T>> Get(QuerryParameters querryParameters, CancellationToken cancellationToken = default);
+        Task<UsersPage> Get(QuerryParameters querryParameters, CancellationToken cancellationToken = default);
 
         Task<T> Get(int id, CancellationToken cancellationToken = default);
 

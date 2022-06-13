@@ -111,7 +111,7 @@ namespace CatalinaNetworks.DataBase
             await SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Core.Models.User>> Get(QuerryParameters querryParameters, CancellationToken cancellationToken = default)
+        public async Task<UsersPage> Get(QuerryParameters querryParameters, CancellationToken cancellationToken = default)
         {
             var usersEntity = await Users
                 .AsNoTracking()
@@ -119,7 +119,8 @@ namespace CatalinaNetworks.DataBase
                 .Skip((querryParameters.PageNumber - 1) * querryParameters.PageSize)
                 .Take(querryParameters.PageSize).ToListAsync(cancellationToken);
 
-            return _mapper.Map<IEnumerable<Core.Models.User>>(usersEntity);
+            var usersPage = new UsersPage(_mapper.Map<IEnumerable<Core.Models.User>>(usersEntity), Users.Count());
+            return usersPage;
         }
     }
 }

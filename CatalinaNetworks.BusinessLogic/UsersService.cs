@@ -13,7 +13,7 @@ namespace CatalinaNetworks.BusinessLogic
         {
             _repository = repository;
         }
-        public async Task<IEnumerable<User>> Get(QuerryParameters parameters)
+        public async Task<UsersPage> Get(QuerryParameters parameters)
         {
             return await _repository.Get(parameters);
         }

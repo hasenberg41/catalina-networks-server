@@ -1,4 +1,5 @@
-﻿using CatalinaNetworks.Core.Models;
+﻿using CatalinaNetworks.API.Models;
+using CatalinaNetworks.Core.Models;
 using CatalinaNetworks.Core.Models.Paggination;
 using CatalinaNetworks.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,8 @@ namespace CatalinaNetworks.API.Controllers
         public async Task<IActionResult> Get([FromQuery] QuerryParameters querryParameters)
         {
             var users = await _service.Get(querryParameters);
-            return Ok(users);
+            var page = new UsersPageContract(users);
+            return Ok(page);
         }
 
         //// GET: api/<UserController>

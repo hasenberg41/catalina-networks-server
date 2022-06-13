@@ -5,6 +5,6 @@ namespace CatalinaNetworks.Core.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> Get(QuerryParameters parameters);
+        Task<UsersPage> Get(QuerryParameters parameters);
     }
 }

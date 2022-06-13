@@ -63,6 +63,7 @@ namespace CatalinaNetworks.DataBase.Tests
                         .Take(pageSize);
 
                     AssertExtentions.EqualUsers(exceptedPage, firstPage);
+                    Assert.Equal(exceptedUsers.Count(), firstPage.TotalCount);
                 }
             }
         }
