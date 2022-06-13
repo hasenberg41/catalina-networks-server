@@ -116,7 +116,6 @@ namespace CatalinaNetworks.DataBase
             var usersEntity = await Users
                 .AsNoTracking()
                 .Include(u => u.Photos)
-                .OrderBy(u => u.Name)
                 .Skip((querryParameters.PageNumber - 1) * querryParameters.PageSize)
                 .Take(querryParameters.PageSize).ToListAsync(cancellationToken);
 

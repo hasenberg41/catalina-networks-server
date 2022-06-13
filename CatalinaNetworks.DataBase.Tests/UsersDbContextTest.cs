@@ -1,6 +1,7 @@
 ﻿using CatalinaNetworks.Core.Exceptions;
 using CatalinaNetworks.Core.Models.Paggination;
 using CatalinaNetworks.DataBase.Entities;
+using System.Linq;
 
 namespace CatalinaNetworks.DataBase.Tests
 {
@@ -29,32 +30,41 @@ namespace CatalinaNetworks.DataBase.Tests
         [InlineData(2)]
         public async Task GetUsersPage_ShouldReturnUsersPage(int count)
         {
-            var users = FixtureDb.Mapper.Map<IEnumerable<Core.Models.User>>(TestDatabaseFixture.Users);
-            var addCoreUsers = users.Append(fixture.CreateMany<Core.Models.User>(count));
+            var users = FixtureDb.Mapper.Map<IEnumerable<Core.Models.User>>(TestDatabaseFixture.Users).ToList();
+            var addCoreUsers = new List<Core.Models.User>(users);
+            addCoreUsers.AddRange(fixture.CreateMany<Core.Models.User>(count));
 
-            var addUsers = FixtureDb.Mapper.Map<IEnumerable<User>>(addCoreUsers);
+            var pageSize = addCoreUsers.Count / 3;
+            var pageCount = addCoreUsers.Count / pageSize;
 
             using (var context = FixtureDb.CreateContext())
             {
-                context.AddRange(addUsers);
+                foreach (var user in addCoreUsers)
+                {
+                    await context.Create(user);
+                }
             }
 
             using (var context = FixtureDb.CreateContext())
             {
-                for (int i = 1; i < count / 2; i++)
+                var exceptedUsers = await context.Get();
+                for (int i = 1; i < pageCount; i++)
                 {
                     var queryParameters = new QuerryParameters
                     {
                         PageNumber = i,
-                        PageSize = count / 2
+                        PageSize = pageSize
                     };
 
                     var firstPage = await context.Get(queryParameters);
-                    AssertExtentions.EqualUsers(addCoreUsers
-                        .Skip((i - 1) * (count / 2))
-                        .Take(count / 2), firstPage);
+
+                    var exceptedPage = exceptedUsers
+                        .Skip((i - 1) * pageSize)
+                        .Take(pageSize);
+
+                    AssertExtentions.EqualUsers(exceptedPage, firstPage);
                 }
-            }// TODO : make test
+            }
         }
 
         [Theory]
