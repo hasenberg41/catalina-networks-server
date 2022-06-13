@@ -1,7 +1,7 @@
-﻿using CatalinaNetworks.DataBase;
-using CatalinaNetworks.DataBase.Entities;
+﻿using CatalinaNetworks.Core.Models;
+using CatalinaNetworks.Core.Models.Paggination;
+using CatalinaNetworks.Core.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 // Пока слои логики не реализованы, контроллер использует методы контекста
 // контекста базы данных напрямую для тестирования frontend части
@@ -12,48 +12,53 @@ namespace CatalinaNetworks.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UsersDbContext _context;
+        private readonly IUserService _service;
 
-        public UsersController(UsersDbContext context)
+        public UsersController(IUserService service)
         {
-            _context = context;
+            _service = service;
         }
-        // GET: api/<UserController>
+
         [HttpGet]
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IActionResult> Get([FromQuery] QuerryParameters querryParameters)
         {
-            var users = await _context.Users.AsNoTracking().ToArrayAsync();
-            return users;
+            var users = await _service.Get(querryParameters);
+            return Ok(users);
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public async Task<User> Get(int id)
-        {
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+        //// GET: api/<UserController>
+        //[HttpGet]
+        //public async Task<IEnumerable<User>> Get()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-            return user;
-        }
+        //// GET api/<UserController>/5
+        //[HttpGet("{id}")]
+        //public async Task<User> Get(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        // POST api/<UserController>
-        [HttpPost]
-        public async Task<int> Post([FromBody] User newUser)
-        {
-            var createdUser = await _context.Users.AddAsync(newUser);
+        //// POST api/<UserController>
+        //[HttpPost]
+        //public async Task<int> Post([FromBody] User newUser)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-            return createdUser.Entity.Id;
-        }
+        //// PUT api/<UserController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/<UserController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

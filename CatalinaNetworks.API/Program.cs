@@ -4,6 +4,10 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using CatalinaNetworks.API.Middleware;
+using CatalinaNetworks.Core.Repositories;
+using CatalinaNetworks.Core.Models;
+using CatalinaNetworks.Core.Services;
+using CatalinaNetworks.BusinessLogic;
 
 //Say my name
 var builder = WebApplication.CreateBuilder(args);
@@ -22,11 +26,12 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 builder.Services.AddValidatorsFromAssemblies(new[] { Assembly.GetExecutingAssembly() });
-
 // Пока слои логики не реализованы, контроллер использует методы контекста
 // контекста базы данных напрямую для тестирования frontend части
-builder.Services.AddDbContext<UsersDbContext>(options => 
+builder.Services.AddDbContext<IRepository<User>, UsersDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+
+builder.Services.AddScoped<IUserService, UsersService>();
 
 builder.Services.AddSwaggerGen();
 
