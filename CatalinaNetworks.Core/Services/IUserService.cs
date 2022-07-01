@@ -1,5 +1,6 @@
 ﻿using CatalinaNetworks.Core.Models;
 using CatalinaNetworks.Core.Models.Paggination;
+using System.Threading.Tasks;
 
 namespace CatalinaNetworks.Core.Services
 {

@@ -5,7 +5,7 @@ namespace CatalinaNetworks.DataBase.Tests
 {
     public class TestDatabaseFixture : IDisposable
     {
-        private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=CatalinaNetworksDbTests;Trusted_Connection=True";
+        private const string ConnectionString = @"Server=DESKTOP-Q6U07MR;Database=CatalinaNetworksDbTests;Trusted_Connection=True";
 
         private static readonly object _lock = new();
         private static bool _databaseInitialized = false;
